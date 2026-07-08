@@ -63,6 +63,8 @@ pub fn BoardComponent(
         }
     };
 
+    let divider_x = 50f32 - 0.25;
+
     let selected_height = if let Some(BoardPos { depot_index, card_index }) = board.selected {
         let d = if DepotRole::role(depot_index).unwrap() == DepotRole::Tableau {
             board.depots[depot_index].len() - card_index - 1
@@ -112,6 +114,17 @@ pub fn BoardComponent(
             position: "absolute",
             top: rem(position.y),
             left: rem(position.x),
+
+            // Divider
+            div {
+                position: "absolute",
+                top: rem(start_y),
+                left: rem(divider_x),
+                width: rem(0.5),
+                border_radius: rem(0.25),
+                height: rem(card_height),
+                background_color: "#aaa",
+            }
 
             for depot in 0..NUM_DEPOTS {
                 if let Some(hint) = get_hint(depot) {

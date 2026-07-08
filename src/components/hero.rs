@@ -2,16 +2,17 @@ use async_std::stream::StreamExt;
 use dioxus::prelude::*;
 use glam::Vec2;
 
-use crate::{components::{BoardComponent, EMOJI_MAP, Help, LocalStorage, Settings, rem}, game::{ANIMATION_DURATION, AnimationKey, GameState, ScreenState}};
+use crate::{components::{BoardComponent, EMOJI_MAP, rem}, game::{ANIMATION_DURATION, AnimationKey, GameState, ScreenState}};
+
 
 #[component]
 pub fn Hero() -> Element {
     let mut state = use_signal(|| {
-        if let Some(mut state) = LocalStorage.load_game_state() {
-            state.board.selected = None;
-            state.screen_state = ScreenState::Game;
-            return state;
-        }
+        // if let Some(mut state) = LocalStorage.load_game_state() {
+        //     state.board.selected = None;
+        //     state.screen_state = ScreenState::Game;
+        //     return state;
+        // }
         GameState::init()
     });
 
@@ -60,7 +61,7 @@ pub fn Hero() -> Element {
                     width: rem(48.),
                     color: "#fff",
 
-                    "Shenzhen",
+                    "FreeCell",
                     br {},
                     "Wins: {st.num_wins}",
                 }
@@ -70,7 +71,7 @@ pub fn Hero() -> Element {
                     top: rem(1.5),
                     right: rem(2.),
                     class: "game-button",
-                    onclick: move |_| if clean {state.write().screen_state = ScreenState::Settings;},
+                    // onclick: move |_| if clean {state.write().screen_state = ScreenState::Settings;},
                     "Settings"
                 }
 
@@ -79,7 +80,7 @@ pub fn Hero() -> Element {
                     top: rem(1.5),
                     right: rem(30.),
                     class: if st.undo_possible() {"game-button"} else {"game-button-disabled"},
-                    onclick: move |_| if clean {state.write().restart()},
+                    // onclick: move |_| if clean {state.write().restart()},
                     "Reset"
                 }
 
@@ -88,7 +89,7 @@ pub fn Hero() -> Element {
                     top: rem(11.),
                     right: rem(2.),
                     class: "game-button",
-                    onclick: move |_| if clean {state.write().screen_state = ScreenState::Help;},
+                    // onclick: move |_| if clean {state.write().screen_state = ScreenState::Help;},
                     "Help"
                 }
 
@@ -97,7 +98,7 @@ pub fn Hero() -> Element {
                     top: rem(11.),
                     right: rem(30.),
                     class: if st.undo_possible() {"game-button"} else {"game-button-disabled"},
-                    onclick: move |_| if clean {state.write().undo()},
+                    // onclick: move |_| if clean {state.write().undo()},
                     "Undo"
                 }
 
@@ -111,13 +112,13 @@ pub fn Hero() -> Element {
                     is_won: st.is_won(),
                 }
             } else if st.screen_state == ScreenState::Settings {
-                Settings { 
-                    game_state: state,
-                }
+                // Settings { 
+                //     game_state: state,
+                // }
             } else if st.screen_state == ScreenState::Help {
-                Help {
-                    game_state: state,
-                },
+                // Help {
+                //     game_state: state,
+                // },
             }
 
             div {
