@@ -22,55 +22,45 @@ pub fn BoardComponent(
     let spacer_x = 1f32;
     let spacer_y = 1.5f32;
 
-    let pos_x = |i: usize| {
-        2. + (card_width + spacer_x) * i as f32 + if i == DepotRole::Tableau.number_of() {spacer_x} else {0.}
+    let pos_x = {
+        let w = 8.;
+        let left = 50. - (w * card_width + (w-1.) * spacer_x) / 2.;
+        move |i: usize| {
+            left + (card_width + spacer_x) * i as f32
+        }
     };
 
     let start_y = 2f32;
     let pos_y = |i: usize| start_y + (card_height + spacer_y) * i as f32;
     let column_card_offset = Vec2::new(0., 6.);
+    let first_row_delta = 0.5f32;
 
     let get_pos = |depot: usize, ord: usize| {
         let (role, index) = DepotRole::role_and_subindex(depot).unwrap();
         match role {
-            DepotRole::Foundation => 
-                Vec2::new(pos_x(index), pos_y(0)),
-            DepotRole::FreeCell | DepotRole::Stock => 
-                Vec2::new(pos_x(DepotRole::Tableau.number_of()-1), pos_y(0)),
-            DepotRole::Waste => 
-                Vec2::new(pos_x(DepotRole::Tableau.number_of()), pos_y(0)) + column_card_offset * ord as f32,
+            DepotRole::FreeCell => Vec2::new(pos_x(index) - first_row_delta, pos_y(0)),
+            DepotRole::Foundation => Vec2::new(pos_x(DepotRole::FreeCell.number_of() + index) + first_row_delta, pos_y(0)),
             DepotRole::Tableau => 
                 Vec2::new(pos_x(index), pos_y(1)) + column_card_offset * ord as f32,
+        }
+    };
+
+    let symbol2 = |text: &str| rsx! {
+        span {
+            font_family: "'Noto Sans Symbols 2'",
+            position: "relative",
+            top: "0.12em",
+            {text}
         }
     };
 
     let get_hint = |depot: usize| {
         let role = DepotRole::role(depot).unwrap();
         match role {
-            DepotRole::Foundation => 
-                Some(skin.render_rank(&Card { rank: 1, suit: Suit::Spades })),
-            DepotRole::FreeCell => 
-                Some(
-                    rsx!{
-                        span {
-                            font_family: "'Noto Sans Symbols 2'",
-                            position: "relative",
-                            top: "0.12em",
-                            "✽"
-                        }
-                    }
-                ),
-            DepotRole::Stock =>
-                None,
-            DepotRole::Waste => 
-                None,
-            DepotRole::Tableau => 
-                Some(rsx!{})
+            DepotRole::FreeCell => Some(symbol2("✽")),
+            DepotRole::Foundation => Some(skin.render_rank(&Card { rank: 1, suit: Suit::Spades })),
+            DepotRole::Tableau => Some(rsx!{}),
         }
-    };
-
-    let is_face_up = |depot: usize| {
-        DepotRole::role(depot).unwrap().is_face_up()
     };
 
     let selected_height = if let Some(BoardPos { depot_index, card_index }) = board.selected {
@@ -117,24 +107,11 @@ pub fn BoardComponent(
         }
     });
 
-    let waste_background_x = pos_x(DepotRole::Tableau.number_of()) - spacer_x - 0.4;
-
     rsx! {
         div {
             position: "absolute",
             top: rem(position.y),
             left: rem(position.x),
-
-            // Waste Divider
-            div {
-                position: "absolute",
-                top: rem(2.),
-                left: rem(waste_background_x),
-                width: rem(0.5),
-                border_radius: rem(0.25),
-                height: rem(160.),
-                background_color: "#aaa",
-            }
 
             for depot in 0..NUM_DEPOTS {
                 if let Some(hint) = get_hint(depot) {
@@ -165,8 +142,8 @@ pub fn BoardComponent(
                     CardComponent { 
                         position: get_pos(depot, i),
                         width: card_width,
-                        card: if is_face_up(depot) {board.depots[depot][i]},
-                        number_hint: if !is_face_up(depot) {i + 1},
+                        card: board.depots[depot][i],
+                        // number_hint: if !is_face_up(depot) {i + 1},
                         skin,
                         onclick: move |_| {
                             onclick.call(BoardPos::new(depot, i))
