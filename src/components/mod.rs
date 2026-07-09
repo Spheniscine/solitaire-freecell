@@ -16,11 +16,11 @@ pub use anim::*;
 mod hero;
 pub use hero::*;
 
-// mod settings;
-// pub use settings::*;
+mod settings;
+pub use settings::*;
 
-// mod local_storage;
-// pub use local_storage::LocalStorage;
+mod local_storage;
+pub use local_storage::LocalStorage;
 
 mod emoji;
 pub use emoji::*;
