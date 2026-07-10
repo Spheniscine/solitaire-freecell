@@ -61,9 +61,9 @@ impl DepotRole {
         Self::role_and_subindex(i).map(|x| x.0)
     }
 
-    pub fn id(self, i: usize) -> usize {
-        self.offset() + i
-    }
+    // pub fn id(self, i: usize) -> usize {
+    //     self.offset() + i
+    // }
 }
 
 #[derive(Copy, Clone, Serialize_tuple, Deserialize_tuple, Debug, PartialEq, Eq)]
@@ -130,11 +130,11 @@ impl Board {
         }
     }
 
-    pub fn top_pos(&self, depot: usize) -> BoardPos {
-        BoardPos::new(depot, self.depots[depot].len())
-    }
+    // pub fn top_pos(&self, depot: usize) -> BoardPos {
+    //     BoardPos::new(depot, self.depots[depot].len())
+    // }
 
-    pub fn last_pos(&self, depot: usize) -> BoardPos {
-        BoardPos::new(depot, self.depots[depot].len().wrapping_sub(1))
-    }
+    // pub fn last_pos(&self, depot: usize) -> BoardPos {
+    //     BoardPos::new(depot, self.depots[depot].len().wrapping_sub(1))
+    // }
 }
