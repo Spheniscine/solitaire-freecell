@@ -50,7 +50,7 @@ fn App() -> Element {
         document::Style {
             r#"
             @font-face {{
-                font-family: KaTeX_Main;
+                font-family: KaTeX_Suits;
                 font-style: normal;
                 font-weight: 700;
                 src: url({KATEX_SUITS}) format("woff2");

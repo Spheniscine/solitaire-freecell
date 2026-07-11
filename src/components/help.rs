@@ -74,7 +74,7 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
 
                         li {
                             Emph{"Double click:"},
-                            " Double-clicking on a card will try to move it to the foundations if possible, or the free cell otherwise."
+                            " Double-clicking on a card will try to move it to the foundations if possible, or a free cell otherwise."
                         }
                     }
                 }

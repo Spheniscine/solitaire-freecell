@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::{components::{Emoji, SkinTrait}, game::{Card, ColorMode, Skin, SuitSkin}};
 
-pub const KATEX_MAIN: &str = "KaTeX_Main";
+pub const KATEX_MAIN: &str = "KaTeX_Suits";
 
 impl Skin {
     fn render_suit_internal(&self, card: &Card, text_mode: bool) -> Element {
