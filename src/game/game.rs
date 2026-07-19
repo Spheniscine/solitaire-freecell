@@ -170,8 +170,6 @@ impl GameState {
         self.board = Board::from_deal(&self.deal);
         self.history.clear();
         self.undo_stack.clear();
-
-        self.check_auto_moves();
         if !self.is_busy() { LocalStorage.save_game_state(&self); }
     }
 
