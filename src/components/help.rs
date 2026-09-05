@@ -27,8 +27,8 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
 
                 p {
                     margin_top: "0",
-                    "The ",Emph {"tableau"}," consists of 8 columns. Cards in the tableau are stacked by descending ranks of 
-                    alternating color (",
+                    "The ",Emph {"tableau"}," consists of 8 columns. Cards in the tableau are stacked by "
+                    Emph{"decrementing ranks"} " and " Emph{"alternating color"} " (",
                     {if skin.colors != ColorSkin::FourColor {"red/black"} else {"warm/cool"}}
                     ,"). Only one card may be moved at a time (but see the later section on ",Emph {"supermoves"},"). 
                     Any card may be moved into an empty tableau column."
@@ -39,7 +39,7 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
                 }
 
                 p {
-                    "To ",Emph{"win the game"},", stack all the cards to the foundations in ascending order by suit."
+                    "To ",Emph{"win the game"},", stack all the cards to the foundations in incrementing order by suit."
                 }
 
                 p {
