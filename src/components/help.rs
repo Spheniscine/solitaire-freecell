@@ -39,7 +39,7 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
                 }
 
                 p {
-                    "To ",Emph{"win the game"},", stack all the cards to the foundations in incrementing order by suit."
+                    "To ",Emph{"win the game"},", stack all the cards to the " Emph{"foundations"} " in incrementing order by suit."
                 }
 
                 p {
