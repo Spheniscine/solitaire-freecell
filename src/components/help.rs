@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use math_macro::math;
 
 use crate::{components::{VIDEO_GAMEPLAY, rem}, game::{ColorSkin, GameState, ScreenState}};
 
@@ -11,6 +12,7 @@ fn Emph(children: Element) -> Element {
         }
     }
 }
+
 
 #[component]
 pub fn Help(game_state: Signal<GameState>) -> Element {
@@ -52,23 +54,19 @@ pub fn Help(game_state: Signal<GameState>) -> Element {
                             free cells and/or columns to make the intermediate moves. The maximum number of cards that 
                             may be moved to a ",Emph{"filled"}," column is ",
                             span { 
-                                // C = (N+1) \cdot 2^M
-                                dangerous_inner_html: include_str!("supermove_formula_1.html")
+                                dangerous_inner_html: math!(r"C = (N+1) \cdot 2^M")
                             },
                             " , where ",
                             span { 
-                                // N
-                                dangerous_inner_html: include_str!("supermove_formula_N.html")
+                                dangerous_inner_html: math!("N")
                             },
                             " is the number of empty free cells, and ",
                             span { 
-                                // M
-                                dangerous_inner_html: include_str!("supermove_formula_M.html")
+                                dangerous_inner_html: math!("M")
                             },
                             " is the number of empty columns. The maximum number that may be moved to an ",Emph{"empty"}," column is ",
                             span { 
-                                // C/2
-                                dangerous_inner_html: include_str!("supermove_formula_2.html")
+                                dangerous_inner_html: math!("C/2")
                             }, " ."
                         }
 
